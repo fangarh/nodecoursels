@@ -17,7 +17,7 @@ export const FileOrgonizer = (
     fs.readdir(delPath, (err, files) => {
       if (err || errorBreak === true) {
         console.log("Something go bad =(((");
-        console.warn(err ? err : "Break signal recived");
+        console.log(err ? err : "Break signal recived");
         return;
       }
 
