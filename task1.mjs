@@ -4,6 +4,7 @@ import fs from "fs";
 export const FileOrgonizer = (
   pathIn = "E:\\temp\\In",
   pathOut = null,
+  skipExists = "true",
   deleteSrc = "",
   delAwait = 1
 ) => {
@@ -34,34 +35,47 @@ export const FileOrgonizer = (
     });
   };
 
+  const Error = (err) => {
+    if (err) {
+      errorBreak = true;
+      console.log(err);
+    }
+  };
+
   const OrgonizedFileMove = (file) => {
     let name = path.parse(file).base;
     let dirToCopy = name.charAt(0).toUpperCase();
 
     dirToCopy = path.join(pathOut, dirToCopy);
+    let destFilePath = path.join(dirToCopy, name);
 
     if (!fs.existsSync(dirToCopy)) fs.mkdirSync(dirToCopy);
 
+    try {
+      if (fs.existsSync(destFilePath)) {
+        if (skipExists === "true") {
+          if (deleteSrc === "true") fs.unlinkSync(file);
+          return;
+        } else fs.unlinkSync(destFilePath);
+      }
+    } catch (err) {
+      Error(err);
+    }
+
     if (deleteSrc !== "true") {
-      fs.link(file, path.join(dirToCopy, name), (err) => {
-        if (err) {
-          errorBreak = true;
-          console.log(err);
-        }
+      fs.link(file, destFilePath, (err) => {
+        Error(err);
       });
     } else {
-      fs.rename(file, path.join(dirToCopy, name), (err) => {
-        if (err) {
-          errorBreak = true;
-          console.log(err);
-        }
+      fs.rename(file, destFilePath, (err) => {
+        Error(err);
       });
     }
   };
 
   const CopyFiles = (scanPath) => {
     console.log(`Coping files: ${scanPath} => ${pathOut}`);
-    DeleteSrc(scanPath);
+
     fs.readdir(scanPath, (err, files) => {
       files.forEach((file) => {
         let newPath = path.join(scanPath, file);
@@ -75,6 +89,7 @@ export const FileOrgonizer = (
         OrgonizedFileMove(newPath);
       });
     });
+    DeleteSrc(scanPath);
   };
 
   const AsyncScaner = () => {
@@ -92,6 +107,8 @@ export const FileOrgonizer = (
         console.log("Invalid input path");
         return;
       }
+
+      if (!fs.existsSync(pathOut)) fs.mkdirSync(pathOut);
 
       CopyFiles(pathIn);
     });
