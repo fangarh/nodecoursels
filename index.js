@@ -1,5 +1,5 @@
 import { FileOrgonizerPr } from "./task1promise.mjs";
-import { FileOrgonizer } from "./task1.mjs";
+import { FileOrgonizer } from "./task1.js";
 
 const firstParam = process.argv.slice(2)[0];
 const secondParam = process.argv.slice(3)[0];
