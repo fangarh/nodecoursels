@@ -24,8 +24,7 @@ export const FileOrgonizer = (
       if (files.length === 0)
         fs.rmdir(delPath, (err) => {
           if (err) {
-            errorBreak = true;
-            console.log(err);
+            Error(err);
           } else console.log(`Folder ${delPath} remooved success`);
         });
       else
