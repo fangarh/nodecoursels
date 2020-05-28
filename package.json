@@ -1,6 +1,10 @@
 {
-"type": "module",
+  "type": "module",
   "dependencies": {
     "del": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.1.0",
+    "eslint-plugin-react": "^7.20.0"
   }
 }

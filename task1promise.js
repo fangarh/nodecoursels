@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 import path from "path";
 import {
   stat as fsStat,
@@ -56,14 +57,14 @@ export const FileOrgonizerPr = (
           return;
         }
 
-        await OrgonizedFileMove(newPath, err);
+        await OrgonizedFileMove(newPath);
       });
     } catch (er) {
       err(er);
     }
   };
 
-  const OrgonizedFileMove = async (file, err) => {
+  const OrgonizedFileMove = async (file) => {
     let name = path.parse(file).base;
     let dirToCopy = name.charAt(0).toUpperCase();
 
@@ -80,7 +81,7 @@ export const FileOrgonizerPr = (
     }
 
     if (deleteSrc !== "true") {
-      await linkAsync(file, destFilePath);
+      await lincAsync(file, destFilePath);
     } else {
       await renameAsync(file, destFilePath);
     }
