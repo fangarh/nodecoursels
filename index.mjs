@@ -8,18 +8,21 @@ if (
   firstParam === "-help" ||
   firstParam === "/?"
 ) {
-  console.log("Apllicatyon for copy and orgonize files.");
   console.log();
-  console.log("Parameters:");
+  console.log("\tApllicatyon for copy and orgonize files.");
+  console.log();
+  console.log("\tParameters:");
   console.log(
-    "[workPath], <[destPath], [skipExists], [deleteSrc], [deleteScanTimeout]>"
+    "\t\t[workPath], <[destPath], [skipExists], [deleteSrc], [deleteScanTimeout]>"
   );
   console.log();
-  console.log("workPath - folder which will be scaned");
-  console.log("destPath - folder where copy files (default : 'workPath..Out')");
+  console.log("\tworkPath - folder which will be scaned");
   console.log(
-    "skipExists - if file already exists in dest folder, it wont be copyed (default: true)"
+    "\tdestPath - folder where copy files (default : 'workPath..Out')"
   );
-  console.log("deleteSrc - delete source folder (default: false)");
-  console.log("deleteAwait - await in async folder delete (default: 1ms)");
+  console.log(
+    "\tskipExists - if file already exists in dest folder, it wont be copyed (default: true)"
+  );
+  console.log("\tdeleteSrc - delete source folder (default: false)");
+  console.log("\tdeleteAwait - await in async folder delete (default: 1ms)");
 } else FileOrgonizer(...process.argv.slice(2, 6));
