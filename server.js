@@ -2,10 +2,11 @@ import express from "express";
 
 const app = express();
 
-const loopCounter = process.env.LS_LOOP_CNT;
+const loopCounter = process.env.LS_LOOP_TMCNT;
 const loopTimeout = process.env.LS_LOOP_TIMEOUT;
 
-console.log(loopCounter, loopTimeout);
+console.log("Start params: ", loopCounter, loopTimeout);
+
 const GetRandomId = (max) => {
   return Math.floor(Math.random() * Math.floor(max));
 };
@@ -16,7 +17,7 @@ const WaitLoop = (iter, func) => {
     console.log(loopTime);
 
     if (iter > 0) {
-      iter--;
+      iter -= loopTimeout;
       WaitLoop(iter, func);
     } else func(loopTime);
   }, loopTimeout);
