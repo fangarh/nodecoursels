@@ -1,8 +1,41 @@
-# See https://help.github.com/ignore-files/ for more about ignoring files.
+# Numerous always-ignore extensions
+*.bak
+*.diff
+*.err
+*.exe
+*.log
+*.orig
+*.rej
+*.sass-cache
+*.swo
+*.swp
+*.vi
+*~
 
-# dependencies
-/node_modules
+# OS or Editor folders
+*.sublime-grunt.cache
+*.sublime-project
+*.sublime-workspace
+._*
+.cache
+.DS_Store
+.project
+.settings
+.tmproj
+Thumbs.db
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Folders to ignore
+.CVS
+.git
+.hg
+.idea
+.svn
+.vscode
+bower_components
+dist
+build
+public
+
+# Node.JS
+node_modules
+npm-debug.log
