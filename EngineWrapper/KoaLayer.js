@@ -2,6 +2,7 @@ const Koa = require("koa");
 const Pug = require("koa-pug");
 const Rout = require("koa-router");
 const Stat = require("koa-static");
+const KoaBody = require("koa-body");
 const Router = new Rout();
 module.exports = KoaLayer = () => {
   const app = new Koa();
@@ -16,9 +17,10 @@ module.exports = KoaLayer = () => {
       });
       app.use(Stat(staticPath));
     },
-    appendGetRender: (uri, view) => {
+    appendGetRender: (uri, view, controller) => {
       Router.get(uri, async function (ctx, next) {
-        return await ctx.render(view);
+        let controllerResultParams = controller(ctx.request.body) || {};
+        return await ctx.render(view, controllerResultParams);
       });
     },
     finalizeRoute: () => {

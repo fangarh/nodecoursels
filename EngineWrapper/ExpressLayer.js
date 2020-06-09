@@ -11,9 +11,10 @@ module.exports = ExpressLayer = () => {
       app.set("views", viewPath);
       app.set("view engine", "pug");
     },
-    appendGetRender: (uri, view) => {
+    appendGetRender: (uri, view, controller) => {
       Router.get(uri, function (req, res, next) {
-        res.render(view, { title: "Express" });
+        let controllerResultParams = controller(req.body) || {};
+        res.render(view, controllerResultParams);
       });
       app.use(uri, Router);
     },

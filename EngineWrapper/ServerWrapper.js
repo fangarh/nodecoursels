@@ -34,9 +34,9 @@ module.exports = ServerWrapper = (engine) => {
       );
     },
 
-    appendGetRender: (uri, page) => {
+    appendGetRender: (uri, page, contrAction) => {
       buildCheck();
-      _engine.appendGetRender(uri, page);
+      _engine.appendGetRender(uri, page, contrAction);
     },
 
     finalizeRoute: () => {
