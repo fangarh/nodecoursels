@@ -39,6 +39,10 @@ module.exports = ServerWrapper = (engine) => {
       _engine.appendGetRender(uri, page, contrAction);
     },
 
+    appendPost: (uri, contrAction) =>{
+      _engine.appendPost(uri, contrAction);
+    },
+
     finalizeRoute: () => {
       routeBuilded = true;
       _engine.finalizeRoute();

@@ -18,6 +18,7 @@ module.exports = ExpressLayer = () => {
       });
       app.use(uri, Router);
     },
+    appendPost: (uri, controller) => {},
     finalizeRoute: () => {},
     use: () => {},
     Prebuild: () => {},

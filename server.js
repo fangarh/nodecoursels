@@ -11,6 +11,7 @@ const server = Server(Constants.engine);
 server.initView();
 server.appendGetRender("/", "./pages/index.pug", indexController);
 server.appendGetRender("/login", "./pages/login.pug", logonContr);
+server.appendPost("/login", logonController);
 server.appendGetRender("/admin", "./pages/admin.pug");
 server.finalizeRoute();
 server.Start(Constants.host, Constants.port);
