@@ -1,6 +1,7 @@
 let ExpressLayer = require("./ExpressLayer");
 let KoaLayer = require("./KoaLayer");
 let path = require("path");
+const Constants = require("../const/const");
 
 module.exports = ServerWrapper = (engine) => {
   let _engine = {};
@@ -39,8 +40,12 @@ module.exports = ServerWrapper = (engine) => {
       _engine.appendGetRender(uri, page, contrAction);
     },
 
-    appendPost: (uri, contrAction) =>{
-      _engine.appendPost(uri, contrAction);
+    appendPost: (
+      uri,
+      contrAction,
+      redirectUri = Constants.noRedirectTemplate
+    ) => {
+      _engine.appendPost(uri, contrAction, redirectUri);
     },
 
     finalizeRoute: () => {

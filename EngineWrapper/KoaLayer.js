@@ -4,7 +4,10 @@ const Rout = require("koa-router");
 const Stat = require("koa-static");
 const session = require("koa-session");
 const KoaBody = require("koa-body");
+const Constants = require("../const/const");
+
 const Router = new Rout();
+
 module.exports = KoaLayer = () => {
   const app = new Koa();
   let pug = {};
@@ -24,7 +27,7 @@ module.exports = KoaLayer = () => {
         return await ctx.render(view, controllerResultParams);
       });
     },
-    appendPost: (uri, controller) => {
+    appendPost: (uri, controller, redirectUri) => {
       Router.post(
         uri,
         KoaBody(),
@@ -38,6 +41,11 @@ module.exports = KoaLayer = () => {
           ctx.response.body = res.body;
 
           ctx.response.status = res.status;
+
+          if (redirectUri === Constants.noRedirectTemplate)
+            ctx.redirect(ctx.originalUrl);
+          else ctx.redirect(redirectUri);
+
           return next();
         }
       );
