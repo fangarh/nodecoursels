@@ -7,4 +7,25 @@ module.exports = {
   host: "localhost",
   engine: "koa",
   noRedirectTemplate: "#####",
+  koaSessionConfig: {
+    key: "task_3_4_sess_key_koa",
+    maxAge: 86400000,
+    overwrite: true,
+    httpOnly: true,
+    signed: false,
+    rolling: false,
+    renew: false,
+    myStore: { msglogin: "!!!" },
+  },
+  expressSessionConfig: {
+    key: "task_3_4_sess_key_express",
+    secret: "???",
+    cookie: {
+      path: "/",
+      httpOnly: true,
+      maxAge: 60000,
+    },
+    saveUninitialized: false,
+    resave: false,
+  },
 };

@@ -14,6 +14,13 @@ module.exports = KoaLayer = () => {
 
   return {
     name: "koa",
+    initSession: (defaults) => {
+      app.use(session(Constants.koaSessionConfig, app));
+      app.use(async (ctx, next) => {
+        if (!ctx.session.myStore) ctx.session.myStore = defaults; //{ msglogin: "", isAuth: false };
+        return next();
+      });
+    },
     initView: (viewPath, staticPath) => {
       pug = new Pug({
         app: app,
@@ -23,24 +30,34 @@ module.exports = KoaLayer = () => {
     },
     appendGetRender: (uri, view, controller) => {
       Router.get(uri, async function (ctx, next) {
-        let controllerResultParams = controller(ctx.request.body) || {};
-        return await ctx.render(view, controllerResultParams);
+        if (controller) {
+          let controllerResultParams = controller(
+            ctx.request,
+            ctx.response,
+            ctx.session
+          );
+          return await ctx.render(view, {
+            ...ctx.session.myStore,
+            ...controllerResultParams,
+          });
+        } else return await ctx.render(view, ctx.session.myStore);
       });
     },
-    appendPost: (uri, controller, redirectUri) => {
+    appendPost: (uri, validator, controller, redirectUri) => {
       Router.post(
         uri,
         KoaBody(),
         async function (ctx, next) {
           //validation will be here
-          return next();
+          if (validator(ctx.request, ctx.response, ctx.session, next))
+            return next();
+
+          if (redirectUri === Constants.noRedirectTemplate)
+            ctx.redirect(ctx.originalUrl);
+          else ctx.redirect(redirectUri);
         },
         async function (ctx, next) {
-          let res = controller(ctx);
-          console.log(res);
-          ctx.response.body = res.body;
-
-          ctx.response.status = res.status;
+          controller(ctx.request, ctx.response, ctx.session);
 
           if (redirectUri === Constants.noRedirectTemplate)
             ctx.redirect(ctx.originalUrl);

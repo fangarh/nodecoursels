@@ -27,6 +27,9 @@ module.exports = ServerWrapper = (engine) => {
   };
 
   return {
+    initSession: (defaults) => {
+      _engine.initSession(defaults);
+    },
     initView: () => {
       buildCheck();
       _engine.initView(
@@ -42,10 +45,13 @@ module.exports = ServerWrapper = (engine) => {
 
     appendPost: (
       uri,
-      contrAction,
+      validator = (req, res, sess, next) => {
+        return next();
+      },
+      contrAction = () => {},
       redirectUri = Constants.noRedirectTemplate
     ) => {
-      _engine.appendPost(uri, contrAction, redirectUri);
+      _engine.appendPost(uri, validator, contrAction, redirectUri);
     },
 
     finalizeRoute: () => {
