@@ -22,7 +22,7 @@ module.exports.adminUploadController = (req, resp, session) => {
   db.addGoods({
     name,
     price,
-    src: path.normalize(fpath).replace(path.normalize("public/", "")),
+    src: path.normalize(fpath).replace(path.normalize("public/"), ""),
   });
   session.myStore.msgfile = "Товар добавлен";
 };

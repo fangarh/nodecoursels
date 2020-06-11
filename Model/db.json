@@ -29,7 +29,12 @@
     {
       "name": "123456",
       "price": "123456",
-      "src": "undefinedimg\\upload_9078369ee1f34792bdd581694041b8bd\\Безымянный.png"
+      "src": "\\img\\upload_9078369ee1f34792bdd581694041b8bd\\Безымянный.png"
+    },
+    {
+      "name": "5454554",
+      "price": "54654545",
+      "src": "undefinedimg\\8b09e0e4-bf05-43f0-a971-e0092bc308f4\\photo\\UyBDyJ4MSd8.jpg"
     }
   ]
 }

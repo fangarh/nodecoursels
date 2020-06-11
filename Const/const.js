@@ -5,7 +5,7 @@
 module.exports = {
   port: 3000,
   host: "localhost",
-  engine: "koa",
+  engine: "express",
   noRedirectTemplate: "#####",
   koaSessionConfig: {
     key: "task_3_4_sess_key_koa",
