@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const Express = require("express");
 const session = require("express-session");
-var fileupload = require("express-fileupload");
+const bb = require("express-busboy");
 const Constants = require("../const/const");
 const Router = Express.Router();
 module.exports = ExpressLayer = () => {
@@ -22,10 +22,10 @@ module.exports = ExpressLayer = () => {
     },
     initView: (viewPath, staticPath) => {
       app.use(Express.static(staticPath));
-      app.use(fileupload());
+      bb.extend(app, { upload: true, path: "./public/img", allowedPath: /./ });
       app.use(bodyParser.json());
       app.use(bodyParser.urlencoded({ extended: false }));
-
+      
       app.set("views", viewPath);
       app.set("view engine", "pug");
     },

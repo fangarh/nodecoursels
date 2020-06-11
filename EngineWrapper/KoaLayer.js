@@ -46,7 +46,10 @@ module.exports = KoaLayer = () => {
     appendPost: (uri, validator, controller, redirectUri) => {
       Router.post(
         uri,
-        KoaBody(),
+        KoaBody({
+          formidable: { uploadDir: "./public/img/" }, //This is where the files would come
+          multipart: true,
+        }),
         async function (ctx, next) {
           //validation will be here
           if (validator(ctx.request, ctx.response, ctx.session, next))
@@ -63,7 +66,7 @@ module.exports = KoaLayer = () => {
             ctx.redirect(ctx.originalUrl);
           else ctx.redirect(redirectUri);
 
-          return next();
+          // return next();
         }
       );
     },

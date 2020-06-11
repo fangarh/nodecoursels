@@ -5,9 +5,31 @@
     "salt": "e05db11ad7a9da3ef9e140c59f96324f"
   },
   "userInfo": {
-    "age": "35",
-    "concerts": "23",
-    "cities": "22",
-    "years": "12"
-  }
+    "age": "66",
+    "concerts": "65",
+    "cities": "21",
+    "years": "11"
+  },
+  "goods": [
+    {
+      "name": "VaultTasks",
+      "price": "255",
+      "src": "\\img\\c6dd5f1e-c76a-4d6b-a936-58a9c0e4ac71\\photo\\HeD2J11zF3g.jpg"
+    },
+    {
+      "name": "popopo",
+      "price": "54654",
+      "src": "/img/1dfc9882-ad59-4319-9159-9ad6cd28e0b6/photo/vVLHR2jeQ0A.jpg"
+    },
+    {
+      "name": "kjkijio",
+      "price": "4345",
+      "src": ".\\img\\upload_0e9212c1cf4ccc2ca9d8c43e8c2ad157"
+    },
+    {
+      "name": "123456",
+      "price": "123456",
+      "src": "undefinedimg\\upload_9078369ee1f34792bdd581694041b8bd\\Безымянный.png"
+    }
+  ]
 }

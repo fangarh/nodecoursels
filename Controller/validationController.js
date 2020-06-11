@@ -88,7 +88,8 @@ module.exports.sendMailValidation = (req, resp, session, next) => {
 
 module.exports.addGoodsValidation = (req, resp, session, next) => {
   console.log("addGoodsValidation");
-  const { name, price } = req.body;
+  let { name, price } = req.body;
+  console.log(req.body);
   const schemaFile = Joi.object({
     name: Joi.string().min(1).max(300).required(),
     size: Joi.number().integer().min(1).required(),
@@ -102,15 +103,16 @@ module.exports.addGoodsValidation = (req, resp, session, next) => {
   session.myStore.msgfile = "";
 
   try {
-    const { error } = schemaDescr.validate({
+    let { error } = schemaDescr.validate({
       name,
       price,
     });
     console.log(req.files);
-    const { fname, size } = req.files.file;
-    console.log(fname);
+    let { size } = req.files.photo;
+    console.log(req.files.photo.name);
+    name = req.files.photo.name;
     const { errorFile } = schemaFile.validate({
-      fname,
+      name,
       size,
     });
 
@@ -131,4 +133,6 @@ module.exports.addGoodsValidation = (req, resp, session, next) => {
     console.log(err);
     return false;
   }
+
+  return true;
 };

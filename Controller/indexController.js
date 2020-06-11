@@ -23,8 +23,8 @@ module.exports.indexController = (req, resp, session) => {
   ];
 
   session.myStore.msgskill = "";
-
-  return { skills: skills };
+  console.log(db.getGoods());
+  return { skills: skills, products: db.getGoods() };
 };
 module.exports.sendMailController = (req, resp, session) => {
   const { name, email, message } = req.body;

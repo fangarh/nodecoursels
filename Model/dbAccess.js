@@ -5,16 +5,18 @@ const adapter = new FileSync("./Model/db.json");
 
 const db = low(adapter);
 
+db.defaults({ goods: [], user: {}, userInfo: {} }).write();
+
 const getUser = () => db.getState().user;
 const getUserInfo = () => db.getState().userInfo;
 const getGoods = () => db.getState().goods;
-const addGoods = ({ name, price, picture }) =>
+const addGoods = ({ name, price, src }) =>
   db
     .get("goods")
     .push({
       name,
       price,
-      picture,
+      src,
     })
     .write();
 

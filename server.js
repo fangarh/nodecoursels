@@ -1,13 +1,18 @@
 "use strict";
-let Server = require("./EngineWrapper/ServerWrapper");
+const Server = require("./EngineWrapper/ServerWrapper");
 const Constants = require("./const/const");
 const logonContr = require("./Controller/logonController");
 const adminContr = require("./Controller/adminController");
 const indexContr = require("./Controller/indexController");
 const validators = require("./Controller/validationController");
-
+const fs = require("fs");
+const path = require("path");
 console.log("cool!");
 console.log(Constants);
+console.log(path.join(process.cwd(), "public", "img"));
+
+if (!fs.existsSync(path.join(process.cwd(), "public", "img")))
+  fs.mkdirSync(path.join(process.cwd(), "public", "img"));
 
 const server = Server(Constants.engine);
 server.initView();
@@ -32,7 +37,7 @@ server.appendPost(
 server.appendPost(
   "/admin/upload",
   validators.addGoodsValidation,
-  () => {},
+  adminContr.adminUploadController,
   "/admin"
 );
 
