@@ -1,25 +1,25 @@
 import * as mongo from 'mongoose'
+import { AccessSchema } from './access.schema';
 
 export const UserSchema = new mongo.Schema({
-    Id: { type: mongo.Types.ObjectId, required: true },
-    UserName: { type: String, required: true },
-    Avatar: { type: String, default: null },
-    FirstName: { type: String, required: true },
-    MiddleName: { type: String, required: false },
-    LastName: { type: String, required: false },
-    Password: { type: String, required: true },
-    Token: {
+    id: { type: mongo.Types.ObjectId, index: true, unique: true, auto: true },
+    userName: { type: String, required: true },
+    avatar: { type: String, default: null },
+    firstName: { type: String, required: true },
+    middleName: { type: String, required: false },
+    lastName: { type: String, required: false },
+    password: { type: String, required: true },
+    token: {
         accessToken: { type: String },
         refreshToken: { type: String },
         accessTokenExpiredAt: { type: Date },
         refreshTokenExpiredAt: { type: Date }
     },
 
-    Permissions: {
-        Chat: { type: mongo.Types.ObjectId, ref: 'AccessSchema' },
-        News: { type: mongo.Types.ObjectId, ref: 'AccessSchema' },
-        Settings: { type: mongo.Types.ObjectId, ref: 'AccessSchema' }
+    permissions: {
+        chat: { type: AccessSchema, default: { id: new mongo.Types.ObjectId() } },
+        news: { type: AccessSchema, default: { id: new mongo.Types.ObjectId() } },
+        settings: { type: AccessSchema, default: { id: new mongo.Types.ObjectId() } },
     }
 })
 
-UserSchema.index({ Id: 1 }, { unique: true });

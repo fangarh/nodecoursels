@@ -1,15 +1,15 @@
 export interface IACL {
-    Id: string;
-    Create: boolean;
-    Read: boolean;
-    Update: boolean;
-    Delete: boolean;
+    id: string;
+    C: boolean;
+    R: boolean;
+    U: boolean;
+    D: boolean;
 }
 
 export interface IPermissions {
-    Chat: IACL;
-    News: IACL;
-    Settings: IACL;
+    chat: IACL;
+    news: IACL;
+    settings: IACL;
 }
 
 export interface IToken {

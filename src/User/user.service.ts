@@ -16,10 +16,11 @@ export class UserService {
 
     async create(createUser: CreateUserDto): Promise<IUser> {
         const saltCnt = 10;
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(createUser.Password, salt);
-
-        const newUser = new this.userModel(ld.assignIn(createUser, { Password: hash }));
+        const salt = await bcrypt.genSalt(saltCnt);
+        console.log(">>", createUser.password, salt)
+        const hash = await bcrypt.hash(createUser.password, salt);
+        console.log(hash)
+        const newUser = new this.userModel(ld.assignIn(createUser, { password: hash }));
         return await newUser.save();
     }
 

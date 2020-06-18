@@ -5,7 +5,7 @@ import { UserService } from '../User/user.service';
 
 @Controller('api')
 export class ApiController {
-    constructor(@Inject() private readonly userService: UserService) {
+    constructor(private readonly userService: UserService) {
         console.log(userService)
     }
     @Post('login')
@@ -16,5 +16,6 @@ export class ApiController {
     @Post('register')
     tryRegister(@Body() body: CreateUserDto) {
         console.log(body);
+        this.userService.create(body).then(user => console.log(user));
     }
 }

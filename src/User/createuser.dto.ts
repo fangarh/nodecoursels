@@ -1,12 +1,12 @@
 import { IPermissions, IToken } from "./ACL";
 
 export class CreateUserDto {
-    Id: string;
-    FirstName: string;
-    LastName: string;
-    MiddleName: string;
-    UserName: string;
-    Password: string;
-    Permissions: IPermissions
-    Token: IToken;
+    id: string;
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    userName: string;
+    password: string;
+    permissions: IPermissions
+    token: IToken;
 }

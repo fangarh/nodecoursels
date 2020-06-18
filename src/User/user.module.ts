@@ -8,7 +8,8 @@ import { AccessSchema } from './access.schema'
 @Module({
     imports: [MongooseModule.forFeature([{ name: "ACL", schema: AccessSchema }, { name: "User", schema: UserSchema }])],
     providers: [UserService],
-    controllers: []
+    controllers: [],
+    exports: [UserService]
 })
 export class UserModule {
 

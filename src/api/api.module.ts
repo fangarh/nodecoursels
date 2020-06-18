@@ -9,7 +9,7 @@ import { UserService } from '../User/user.service';
 
 
 @Module({
-    imports: [AuthService, UserModule, UserService],
+    imports: [AuthService, UserModule],
 
     controllers: [ApiController],
     providers: [ApiService],
