@@ -13,9 +13,18 @@ export class ApiController {
         return "gggg " + login + " " + password;
     }
 
-    @Post('register')
+    @Post('registration')
+    tryReg() {
+        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
+
+    }
     tryRegister(@Body() body: CreateUserDto) {
         console.log(body);
         this.userService.create(body).then(user => console.log(user));
     }
-}
+
+    @Post('profile')
+    async getUserProfile(@Body('userName') user: string) {
+        return await this.userService.find(user);
+    }
+} 

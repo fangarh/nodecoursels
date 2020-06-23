@@ -24,7 +24,7 @@ export class UserService {
         return await newUser.save();
     }
 
-    async find(id: string): Promise<IUser> {
-        return await this.userModel.findById(id).exec();
+    async find(userName: string): Promise<IUser> {
+        return await this.userModel.where('userName').equals(userName).exec();
     }
 }
