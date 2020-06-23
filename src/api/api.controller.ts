@@ -14,10 +14,6 @@ export class ApiController {
     }
 
     @Post('registration')
-    tryReg() {
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-    }
     tryRegister(@Body() body: CreateUserDto) {
         console.log(body);
         this.userService.create(body).then(user => console.log(user));
