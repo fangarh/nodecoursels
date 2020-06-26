@@ -11,7 +11,7 @@ import { AuthModule } from 'src/Auth/auth.module';
 
 @Controller('api')
 export class ApiController {
-    constructor(private readonly userService: UserService, private readonly tokenService: AuthStrategy) {
+    constructor(private readonly userService: UserService, private readonly tokenService: TokenService) {
         console.log(userService)
     }
 
