@@ -7,10 +7,11 @@ import { AuthService } from '../Auth/auth.service';
 import { JwtService } from '@nestjs/jwt';
 import { IAuthPayload } from '../Auth/dto/authpayload.dto';
 import { TokenService } from '../Auth/token.service';
+import { AuthModule } from 'src/Auth/auth.module';
 
 @Controller('api')
 export class ApiController {
-    constructor(private readonly userService: UserService, private readonly tokenService: TokenService) {
+    constructor(private readonly userService: UserService, private readonly tokenService: AuthService) {
         console.log(userService)
     }
 
@@ -18,7 +19,7 @@ export class ApiController {
     async tryLogin(@Body('username') login: string, @Body('password') password: string) {
         let userObj = await this.userService.signIn(login, password)
 
-        userObj = await this.tokenService.sign(userObj);
+        userObj = await this.tokenService.signReloaded(userObj);
 
         console.log(userObj.token)
 
