@@ -9,7 +9,7 @@ export class TokenService {
 
     }
 
-    async sign(userObj: IUser): Promise<IUser> {
+    async signUser(userObj: IUser): Promise<IUser> {
         const payload: IAuthPayload = { username: userObj.username }
         const accessToken = await this.jwtService.sign(payload);
 

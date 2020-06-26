@@ -7,16 +7,18 @@ import { UserModule } from '../User/user.module';
 import { TokenService } from './token.service';
 
 @Module({
-    imports: [JwtModule.register({
+    imports: [PassportModule.register({ defaultStrategy: "jwt" }), JwtModule.register({
         secret: process.env.JWT_SECRET,
         signOptions: {
             expiresIn: '1d'
         }
-    }), PassportModule.register({ defaultStrategy: "jwt" }), UserModule],
+    }), UserModule],
     providers: [AuthStrategy, TokenService],
     controllers: [],
     exports: [PassportModule, AuthStrategy, TokenService]
 })
 export class AuthModule {
+    constructor() {
 
+    }
 }

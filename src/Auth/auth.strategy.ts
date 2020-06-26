@@ -14,6 +14,7 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
             jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Token'),
             secretOrKey: process.env.JWT_SECRET
         });
+        console.log("Strategy inited:", process.env.JWT_SECRET);
     }
 
     async validate(payload: IAuthPayload) {

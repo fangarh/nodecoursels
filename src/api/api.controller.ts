@@ -19,7 +19,7 @@ export class ApiController {
     async tryLogin(@Body('username') login: string, @Body('password') password: string) {
         let userObj = await this.userService.signIn(login, password)
 
-        userObj = await this.tokenService.sign(userObj);
+        userObj = await this.tokenService.signUser(userObj);
 
         console.log(userObj.token)
 
