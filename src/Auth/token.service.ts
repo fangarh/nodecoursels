@@ -1,5 +1,5 @@
 import { JwtService } from "@nestjs/jwt";
-import { IUser } from "src/User/User";
+import { IUser } from "../User/User";
 import { IAuthPayload } from "./dto/authpayload.dto";
 import { Injectable } from "@nestjs/common";
 
