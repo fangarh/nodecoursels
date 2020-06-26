@@ -8,7 +8,7 @@ import { IUser } from "../User/User";
 import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
-export class AuthService extends PassportStrategy(Strategy) {
+export class AuthStrategy extends PassportStrategy(Strategy) {
     constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Token'),

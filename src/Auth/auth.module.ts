@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { JwtModule, JwtService } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
-import { AuthService } from './auth.service';
+import { AuthStrategy } from './auth.strategy';
 import { from } from 'rxjs';
 import { UserModule } from '../User/user.module';
 import { TokenService } from './token.service';
@@ -13,9 +13,9 @@ import { TokenService } from './token.service';
             expiresIn: '1d'
         }
     }), PassportModule.register({ defaultStrategy: "jwt" }), UserModule],
-    providers: [AuthService, TokenService],
+    providers: [AuthStrategy, TokenService],
     controllers: [],
-    exports: [PassportModule, AuthService, TokenService]
+    exports: [PassportModule, AuthStrategy, TokenService]
 })
 export class AuthModule {
 
