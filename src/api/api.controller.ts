@@ -21,7 +21,7 @@ export class ApiController {
 
         console.log(process.env.JWT_SECRET)
 
-        userObj = await this.tokenService.signReloaded(userObj);
+        userObj = await this.tokenService.sign(userObj);
 
         console.log(userObj.token)
 
