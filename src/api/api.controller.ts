@@ -19,8 +19,6 @@ export class ApiController {
     async tryLogin(@Body('username') login: string, @Body('password') password: string) {
         let userObj = await this.userService.signIn(login, password)
 
-        console.log(process.env.JWT_SECRET)
-
         userObj = await this.tokenService.sign(userObj);
 
         console.log(userObj.token)
