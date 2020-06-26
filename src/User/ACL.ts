@@ -1,5 +1,4 @@
 export interface IACL {
-    id: string;
     C: boolean;
     R: boolean;
     U: boolean;
@@ -15,6 +14,6 @@ export interface IPermissions {
 export interface IToken {
     AccessToken: string;
     RefreshToken: string;
-    AccessTokenExpiredAt: string;
-    RefreshTokenExpiredAt: string;
+    AccessTokenExpiredAt: Date;
+    RefreshTokenExpiredAt: Date;
 }

@@ -5,7 +5,7 @@ export class CreateUserDto {
     firstName: string;
     lastName: string;
     middleName: string;
-    userName: string;
+    username: string;
     password: string;
     permissions: IPermissions
     token: IToken;

@@ -6,7 +6,10 @@ export interface IUser extends Document {
     firstName: string;
     lastName: string;
     middleName: string;
-    userName: string;
+    username: string;
     permissions: IPermissions
     token: IToken;
+    password: string;
+    salt: string;
+    avatar: string;
 }
