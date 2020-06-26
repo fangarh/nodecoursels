@@ -39,4 +39,10 @@ export class ApiController {
 
         return new ResponseUserDto(userObj);
     }
+
+    @Get('news')
+    async getNews() {
+        console.log("recived")
+        return [{ title: "t", text: "txt" }]
+    }
 } 

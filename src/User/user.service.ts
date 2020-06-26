@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as ld from 'lodash'
 
-import { IUser } from './User';
+import { IUser } from './model/User';
 import { CreateUserDto } from './createuser.dto';
 import passport from 'passport';
 

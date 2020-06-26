@@ -1,4 +1,4 @@
-import { IUser } from '../User';
+import { IUser } from '../model/User';
 
 
 export class ResponseUserDto {

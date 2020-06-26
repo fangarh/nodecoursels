@@ -6,8 +6,14 @@ import { from } from 'rxjs';
 import { UserModule } from '../User/user.module';
 import { TokenService } from './token.service';
 
+import { ConfigModule } from '@nestjs/config';
+
+const env = process.env.CONFIG_PATH_FOR_LOFT || "development"
 @Module({
-    imports: [PassportModule.register({ defaultStrategy: "jwt" }), JwtModule.register({
+    imports: [ConfigModule.forRoot({
+        envFilePath: `.env.${env}`,
+        isGlobal: true
+    }), PassportModule.register({ defaultStrategy: "jwt" }), JwtModule.register({
         secret: process.env.JWT_SECRET,
         signOptions: {
             expiresIn: '1d'
@@ -19,6 +25,6 @@ import { TokenService } from './token.service';
 })
 export class AuthModule {
     constructor() {
-
+        console.log(">>>Strategy inited:", process.env.JWT_SECRET);
     }
 }
