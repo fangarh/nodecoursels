@@ -32,17 +32,12 @@ export class NewsService {
 
   async allNews(): Promise<NewsGetDto[]> {
     const result = [];
-    console.log('!!! NEWS !!!');
+
     await this.newsModel.find({}, (err, newses) => {
       newses.forEach(e => {
-        try {
-          const dto = new NewsGetDto();
-          dto.fromNew(e);
-          result.push(dto);
-          console.log('>> ', e);
-        } catch (eeee) {
-          console.log(eeee);
-        }
+        const dto = new NewsGetDto();
+        dto.fromNew(e);
+        result.push(dto);
       });
     });
 
@@ -52,10 +47,17 @@ export class NewsService {
   }
 
   async deleteNews(id: string): Promise<void> {
-    console.log('DEL:', await await this.newsModel.findOne({ _id: id }).exec());
+    console.log('DEL:', await this.newsModel.findOne({ _id: id }).exec());
     await this.newsModel
       .findOne({ _id: id })
       .remove({ _id: id })
       .exec();
+  }
+
+  async updateNews(id: string, news: NewsPostDto): Promise<void> {
+    const element = await this.newsModel.findOne({ _id: id }).exec();
+    element.Title = news.title;
+    element.Text = news.text;
+    await element.save();
   }
 }

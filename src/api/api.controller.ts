@@ -7,6 +7,7 @@ import {
   Headers,
   Delete,
   Param,
+  Patch,
 } from '@nestjs/common';
 import { CreateUserDto } from '../User/dto/createuser.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -71,20 +72,30 @@ export class ApiController {
   ): Promise<NewsGetDto[]> {
     const user = await this.tokenService.getPayload(headers['authorization']);
 
-    this.newsService.addNews(news, user);
+    await this.newsService.addNews(news, user);
 
     return this.newsService.allNews();
   }
 
   @Get('news')
   async getNews(): Promise<NewsGetDto[]> {
-    return await this.newsService.allNews();
+    return this.newsService.allNews();
   }
 
   @Delete('news/:id')
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async deleteNews(@Param() params: any): Promise<void> {
-    this.newsService.deleteNews(params.id);
-    return;
+  async deleteNews(@Param() params: any): Promise<NewsGetDto[]> {
+    await this.newsService.deleteNews(params.id);
+    return this.newsService.allNews();
+  }
+
+  @Patch('news/:id')
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async updateNews(
+    @Param() params: any,
+    @Body() news: NewsPostDto,
+  ): Promise<NewsGetDto[]> {
+    await this.newsService.updateNews(params.id, news);
+    return this.newsService.allNews();
   }
 }
