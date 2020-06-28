@@ -50,4 +50,12 @@ export class NewsService {
 
     return result;
   }
+
+  async deleteNews(id: string): Promise<void> {
+    console.log('DEL:', await await this.newsModel.findOne({ _id: id }).exec());
+    await this.newsModel
+      .findOne({ _id: id })
+      .remove({ _id: id })
+      .exec();
+  }
 }
