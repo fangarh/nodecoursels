@@ -36,7 +36,7 @@ export class NewsService {
     await this.newsModel.find({}, (err, newses) => {
       newses.forEach(e => {
         const dto = new NewsGetDto();
-        dto.fromNew(e);
+        dto.fromNews(e);
         result.push(dto);
       });
     });

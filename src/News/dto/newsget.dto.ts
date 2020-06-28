@@ -11,7 +11,7 @@ export class NewsGetDto {
   title: string;
   user: NewsUserDto;
 
-  fromNew(elem: News): void {
+  fromNews(elem: News): void {
     this.id = elem.id;
     this.created_at = elem.CreatedAt;
     this.text = elem.Text;
