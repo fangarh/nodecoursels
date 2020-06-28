@@ -4,7 +4,7 @@ const uri: string = "http://localhost:3030/";
 
 @Controller()
 export class AppController {
-  @Get("*")
+  @Get(":data")
   @Redirect(uri)
   redirectToClient(): any { }
 }

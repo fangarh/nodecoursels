@@ -11,9 +11,10 @@ export class NewsUserDto {
     fromIUser(user: IUser) {
         this.id = user.id;
         this.firstName = user.firstName;
-        this.image = user.avatar;
+        this.image = user.avatar || "";
         this.middleName = user.middleName;
-        this.surName = user.lastName;
+        this.surName = user.lastName || "";
         this.username = user.username;
+
     }
 }

@@ -7,6 +7,7 @@ import { UserModule } from '../User/user.module';
 import { TokenService } from './token.service';
 
 import { ConfigModule } from '@nestjs/config';
+import { AuthGuard } from './auth.guard';
 
 const env = process.env.CONFIG_PATH_FOR_LOFT || "development"
 @Module({
@@ -19,12 +20,12 @@ const env = process.env.CONFIG_PATH_FOR_LOFT || "development"
             expiresIn: '1d'
         }
     }), UserModule],
-    providers: [AuthStrategy, TokenService],
+    providers: [AuthStrategy, AuthGuard, TokenService],
     controllers: [],
-    exports: [PassportModule, AuthStrategy, TokenService]
+    exports: [PassportModule, AuthStrategy, TokenService, AuthGuard]
 })
 export class AuthModule {
     constructor() {
-        console.log(">>>Strategy inited:", process.env.JWT_SECRET);
+
     }
 }

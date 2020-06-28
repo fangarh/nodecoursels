@@ -5,7 +5,7 @@ import * as bcrypt from 'bcrypt';
 import * as ld from 'lodash'
 
 import { IUser } from './model/User';
-import { CreateUserDto } from './createuser.dto';
+import { CreateUserDto } from './dto/createuser.dto';
 import passport from 'passport';
 
 
@@ -18,7 +18,7 @@ export class UserService {
     async create(createUser: CreateUserDto): Promise<IUser> {
         const saltCnt = 10;
         const salt = await bcrypt.genSalt(saltCnt);
-        console.log(">>", createUser.password, salt)
+        console.log("> >", createUser.password, salt)
         const hash = await bcrypt.hash(createUser.password, salt);
         console.log(hash)
         const newUser = new this.userModel(ld.assignIn(createUser, { password: hash, salt: salt }));

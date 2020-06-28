@@ -31,13 +31,4 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
         return user;
     }
 
-    async signReloaded(userObj: IUser): Promise<IUser> {
-        const payload: IAuthPayload = { username: userObj.username }
-        const accessToken = await this.jwtService.sign(payload);
-
-        userObj.token.AccessToken = accessToken;
-        userObj.token.AccessTokenExpiredAt = new Date('1d');
-        console.log(accessToken);
-        return userObj
-    }
 }
