@@ -1,20 +1,19 @@
-import { IUser } from "../model/User";
+import { IUser } from '../model/User';
 
 export class NewsUserDto {
-    firstName: String;
-    id: string;
-    image: String;
-    middleName: String;
-    surName: String;
-    username: String;
+  firstName: string;
+  id: string;
+  image: string;
+  middleName: string;
+  surName: string;
+  username: string;
 
-    fromIUser(user: IUser) {
-        this.id = user.id;
-        this.firstName = user.firstName;
-        this.image = user.avatar || "";
-        this.middleName = user.middleName;
-        this.surName = user.lastName || "";
-        this.username = user.username;
-
-    }
+  fromIUser(user: IUser): void {
+    this.id = user.id;
+    this.firstName = user.firstName;
+    this.image = user.avatar || '';
+    this.middleName = user.middleName;
+    this.surName = user.surName || '';
+    this.username = user.username;
+  }
 }

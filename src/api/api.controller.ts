@@ -8,22 +8,25 @@ import {
   Delete,
   Param,
   Patch,
+  UploadedFile,
+  UseInterceptors,
+  UploadedFiles,
 } from '@nestjs/common';
+
 import { CreateUserDto } from '../User/dto/createuser.dto';
-import { InjectModel } from '@nestjs/mongoose';
 import { UserService } from '../User/user.service';
 import { ResponseUserDto } from '../User/dto/responseuser.dto';
 import { AuthStrategy } from '../Auth/auth.strategy';
-import { JwtService } from '@nestjs/jwt';
-import { IAuthPayload } from '../Auth/dto/authpayload.dto';
 import { TokenService } from '../Auth/token.service';
-import { AuthModule } from '../Auth/auth.module';
 import { NewsGetDto } from '../News/dto/newsget.dto';
-import { NewsUserDto } from '../User/dto/newsuser.dto';
 import { AuthGuard } from '../Auth/auth.guard';
 import { NewsPostDto } from '../News/dto/newspost.dto';
 import { NewsService } from '../News/news.service';
 import { IUser } from '../User/model/User';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UpdateProfileDto } from '../User/dto/updateprofile.dto';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('api')
 export class ApiController {
@@ -97,5 +100,27 @@ export class ApiController {
   ): Promise<NewsGetDto[]> {
     await this.newsService.updateNews(params.id, news);
     return this.newsService.allNews();
+  }
+
+  @Patch('profile')
+  @UseInterceptors(
+    FileInterceptor('avatar', {
+      storage: diskStorage({
+        destination: './upload',
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          cb(null, `${randomName}${extname(file.originalname)}`);
+        },
+      }),
+    }),
+  )
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async updateProfile(@UploadedFile() avatar): Promise<void> {
+    console.log('1:', avatar);
+
+    //  console.log(profile);
   }
 }

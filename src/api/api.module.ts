@@ -8,12 +8,12 @@ import { UserModule } from '../User/user.module';
 import { UserService } from '../User/user.service';
 import { AuthModule } from '../Auth/auth.module';
 import { NewsModule } from '../News/news.module';
-
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
-    imports: [AuthModule, UserModule, NewsModule],
+  imports: [AuthModule, UserModule, NewsModule],
 
-    controllers: [ApiController],
-    providers: [ApiService],
+  controllers: [ApiController],
+  providers: [ApiService],
 })
-export class ApiModule { }
+export class ApiModule {}
