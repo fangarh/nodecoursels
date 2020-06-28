@@ -1,5 +1,5 @@
-import { NewsUserDto } from '../../User/dto/newsuser.dto';
-import { News } from '../model/news.model';
+import { NewsUserDto } from '../User/newsuser.dto';
+import { News } from '../../News/News';
 
 export class NewsGetDto {
   constructor() {

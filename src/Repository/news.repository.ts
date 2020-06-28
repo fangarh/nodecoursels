@@ -1,12 +1,13 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { News } from './model/news.model';
 import { Model } from 'mongoose';
-import { NewsPostDto } from './dto/newspost.dto';
-import { IUser } from '../User/model/User';
-import { NewsGetDto } from './dto/newsget.dto';
-import { NewsUserDto } from '../User/dto/newsuser.dto';
 
-export class NewsService {
+import { IUser } from '../Model/User/User';
+import { News } from '../Model/News/News';
+import { NewsUserDto } from '../Model/DTO/User/newsuser.dto';
+import { NewsPostDto } from '../Model/DTO/News/newspost.dto';
+import { NewsGetDto } from '../Model/DTO/News/newsget.dto';
+
+export class NewsRepository {
   constructor(@InjectModel('News') private readonly newsModel: Model<News>) {
     console.log(newsModel);
   }
@@ -40,7 +41,7 @@ export class NewsService {
       result.push(dto);
     });
 
-    console.log('!!! NEWS !!!', result);
+    console.log('!!! NEWS!!!', result);
 
     return result;
   }

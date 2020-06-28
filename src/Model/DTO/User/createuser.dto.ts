@@ -1,4 +1,4 @@
-import { IPermissions, IToken } from '../model/ACL';
+import { IPermissions, IToken } from '../../User/ACL';
 
 export class CreateUserDto {
   id: string;

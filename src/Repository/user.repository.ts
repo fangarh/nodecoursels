@@ -4,11 +4,11 @@ import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import * as ld from 'lodash';
 
-import { IUser } from './model/User';
-import { CreateUserDto } from './dto/createuser.dto';
+import { IUser } from '../Model/User/User';
+import { CreateUserDto } from '../Model/DTO/User/createuser.dto';
 
 @Injectable()
-export class UserService {
+export class UserRepository {
   constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {
     console.log(this.userModel);
   }

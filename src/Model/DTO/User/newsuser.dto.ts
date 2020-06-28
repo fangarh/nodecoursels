@@ -1,4 +1,4 @@
-import { IUser } from '../model/User';
+import { IUser } from '../../User/User';
 
 export class NewsUserDto {
   firstName: string;
