@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Inject, UseGuards, Headers } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Inject,
+  UseGuards,
+  Headers,
+} from '@nestjs/common';
 import { CreateUserDto } from '../User/dto/createuser.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserService } from '../User/user.service';
@@ -13,71 +21,64 @@ import { NewsUserDto } from '../User/dto/newsuser.dto';
 import { AuthGuard } from '../Auth/auth.guard';
 import { NewsPostDto } from '../News/dto/newspost.dto';
 import { NewsService } from '../News/news.service';
+import { IUser } from '../User/model/User';
 
 @Controller('api')
 export class ApiController {
-    constructor(
-        private readonly userService: UserService,
-        private readonly tokenService: TokenService,
-        private readonly strategy: AuthStrategy,
-        private readonly newsService: NewsService) {
-        console.log(userService)
-    }
+  constructor(
+    private readonly userService: UserService,
+    private readonly tokenService: TokenService,
+    private readonly strategy: AuthStrategy,
+    private readonly newsService: NewsService,
+  ) {
+    console.log(userService);
+  }
 
-    @Post('login')
-    async tryLogin(@Body('username') login: string, @Body('password') password: string) {
-        let userObj = await this.userService.signIn(login, password)
+  @Post('login')
+  async tryLogin(
+    @Body('username') login: string,
+    @Body('password') password: string,
+  ): Promise<ResponseUserDto> {
+    const userObj = await this.userService.signIn(login, password);
+    let userToSign = new ResponseUserDto(userObj);
 
-        let userToSign = new ResponseUserDto(userObj);
+    userToSign = await this.tokenService.signUser(userToSign);
 
-        userToSign = await this.tokenService.signUser(userToSign);
+    return userToSign;
+  }
 
-        console.log(">>>", userToSign)
+  @Post('registration')
+  async tryRegister(@Body() body: CreateUserDto): Promise<IUser> {
+    return await this.userService.create(body);
+  }
 
-        return userToSign;
-    }
+  @Get('profile')
+  async getUserProfile(
+    @Body('userName') user: string,
+  ): Promise<ResponseUserDto> {
+    const userObj = await this.userService.find(user);
 
-    @Post('registration')
-    async tryRegister(@Body() body: CreateUserDto) {
-        let user = await this.userService.create(body);
+    return new ResponseUserDto(userObj);
+  }
 
-        return user;
-    }
+  @UseGuards(AuthGuard)
+  @Post('news')
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async addNews(
+    @Body() news: NewsPostDto,
+    @Headers() headers: any,
+  ): Promise<NewsGetDto[]> {
+    const user = await this.tokenService.getPayload(headers['authorization']);
 
-    @Get('profile')
-    async getUserProfile(@Body('userName') user: string) {
-        let userObj = await this.userService.find(user);
+    this.newsService.addNews(news, user);
 
-        return new ResponseUserDto(userObj);
-    }
+    return [];
+  }
 
-    @UseGuards(AuthGuard)
-    @Post('news')
-    async addNews(@Body() news: NewsPostDto, @Headers() headers: any): Promise<NewsGetDto[]> {
-        let user = await this.tokenService.getPayload(headers["authorization"]);
-
-        this.newsService.addNews(news, user);
-
-        return [];
-    }
-
-    @UseGuards(AuthGuard)
-    @Get('news')
-    async getNews(@Headers() headers: any): Promise<NewsGetDto[]> {
-        // this.tokenService.getPayload(headers["authorization"]));
-        /*      let usr: NewsUserDto = new NewsUserDto()
-              usr.firstName = "1";
-              usr.id = "5ef5acda79c1d91e70f062f5";
-              usr.username = "user1";
-      
-              return [{
-                  id: " Primary key",
-                  created_at: new Date(Date.now()),
-                  text: "String",
-                  title: "String",
-                  user: usr
-              }];*/
-
-        return this.newsService.allNews()
-    }
-} 
+  @Get('news')
+  async getNews(): Promise<NewsGetDto[]> {
+    // this.tokenService.getPayload(headers["authorization"]));
+    console.log('<><><>');
+    return this.newsService.allNews();
+  }
+}
