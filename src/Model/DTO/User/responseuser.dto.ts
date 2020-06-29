@@ -1,7 +1,7 @@
-import { IUser } from '../../User/User';
+import { User } from '../../User/User';
 
 export class ResponseUserDto {
-  constructor(user: IUser = undefined) {
+  constructor(user: User = undefined) {
     if (user) {
       this.fromIUser(user);
     }
@@ -26,7 +26,7 @@ export class ResponseUserDto {
     settings: any;
   };
 
-  fromIUser(user: IUser): void {
+  fromIUser(user: User): void {
     this.id = user.id;
     this.image = user.avatar;
     this.username = user.username;

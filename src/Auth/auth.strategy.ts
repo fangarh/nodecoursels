@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
 import { IAuthPayload } from '../Model/DTO/Auth/authpayload.dto';
-import { IUser } from '../Model/User/User';
+import { User } from '../Model/User/User';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../Repository/user.repository';
 
@@ -20,7 +20,7 @@ export class AuthStrategy extends PassportStrategy(Strategy) {
     console.log('Strategy inited: ', process.env.JWT_SECRET);
   }
 
-  async validate(payload: IAuthPayload): Promise<IUser> {
+  async validate(payload: IAuthPayload): Promise<User> {
     console.log('PAYLOAD ', payload);
     const { username } = payload;
     const user = await this.userService.find(username);

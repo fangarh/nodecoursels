@@ -1,7 +1,7 @@
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { IUser } from '../Model/User/User';
+import { User } from '../Model/User/User';
 import { News } from '../Model/News/News';
 import { NewsUserDto } from '../Model/DTO/User/newsuser.dto';
 import { NewsPostDto } from '../Model/DTO/News/newspost.dto';
@@ -12,7 +12,7 @@ export class NewsRepository {
     console.log(newsModel);
   }
 
-  setNews(newNews: News, news: NewsPostDto, user: IUser): News {
+  setNews(newNews: News, news: NewsPostDto, user: User): News {
     const userDto = new NewsUserDto();
     userDto.fromIUser(user);
     newNews.Text = news.text;
@@ -23,7 +23,7 @@ export class NewsRepository {
     return newNews;
   }
 
-  async addNews(news: NewsPostDto, user: IUser): Promise<News> {
+  async addNews(news: NewsPostDto, user: User): Promise<News> {
     const preparedArticle = new this.newsModel();
 
     this.setNews(preparedArticle, news, user);

@@ -4,7 +4,7 @@ import { TokenService } from './token.service';
 import { AuthStrategy } from './auth.strategy';
 import { ResponseUserDto } from '../Model/DTO/User/responseuser.dto';
 import { CreateUserDto } from '../Model/DTO/User/createuser.dto';
-import { IUser } from '../Model/User/User';
+import { User } from '../Model/User/User';
 import { UserRepository } from '../Repository/user.repository';
 
 @Controller('api')
@@ -29,7 +29,7 @@ export class AuthController {
   }
 
   @Post('registration')
-  async tryRegister(@Body() body: CreateUserDto): Promise<IUser> {
+  async tryRegister(@Body() body: CreateUserDto): Promise<User> {
     return await this.userService.create(body);
   }
 }

@@ -1,5 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
-import { IUser } from '../Model/User/User';
+import { User } from '../Model/User/User';
 import { IAuthPayload } from '../Model/DTO/Auth/authpayload.dto';
 import { Injectable } from '@nestjs/common';
 import { ResponseUserDto } from '../Model/DTO/User/responseuser.dto';
@@ -26,10 +26,16 @@ export class TokenService {
     return userObj;
   }
 
-  async getPayload(token: string): Promise<IUser> {
+  async getPayload(token: string): Promise<User> {
     const payload = await this.jwtService.decode(token);
     console.log(payload['username']);
 
     return await this.userService.find(payload['username']);
+  }
+
+  async getUserFromPayload(token: string): Promise<string> {
+    const payload = await this.jwtService.decode(token);
+
+    return payload['username'];
   }
 }

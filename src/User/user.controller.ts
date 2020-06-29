@@ -3,25 +3,28 @@ import {
   Get,
   Body,
   Patch,
+  Headers,
   UseInterceptors,
   UploadedFile,
+  Param,
+  Delete,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { extname } from 'path';
 import { diskStorage } from 'multer';
 
 import { TokenService } from '../Auth/token.service';
-import { AuthStrategy } from '../Auth/auth.strategy';
+
 import { ResponseUserDto } from '../Model/DTO/User/responseuser.dto';
 import { UpdateProfileDto } from '../Model/DTO/User/updateprofile.dto';
 import { UserRepository } from '../Repository/user.repository';
+import { UserAclDto } from '../Model/DTO/User/useracl.dto';
 
 @Controller('api')
 export class UserController {
   constructor(
     private readonly userService: UserRepository,
     private readonly tokenService: TokenService,
-    private readonly strategy: AuthStrategy,
   ) {}
 
   @Get('profile')
@@ -31,6 +34,28 @@ export class UserController {
     const userObj = await this.userService.find(user);
 
     return new ResponseUserDto(userObj);
+  }
+
+  @Get('users')
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async getAllUsers(): Promise<ResponseUserDto[]> {
+    return this.userService.getAllUsers();
+  }
+
+  @Delete('users/:id')
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async deleteUser(@Param() param): Promise<ResponseUserDto[]> {
+    await this.userService.deleteUser(param.id);
+    return this.userService.getAllUsers();
+  }
+
+  @Patch('users/:id/permission')
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  async updatePermissions(
+    @Body() perm: UserAclDto,
+    @Param() params,
+  ): Promise<ResponseUserDto> {
+    return this.userService.updateUserAcl(params.id, perm.permission);
   }
 
   @Patch('profile')
@@ -51,10 +76,18 @@ export class UserController {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async updateProfile(
     @UploadedFile() avatar,
+    @Headers() headers: any,
     @Body() profile: UpdateProfileDto,
-  ): Promise<void> {
-    console.log('1:', avatar);
+  ): Promise<ResponseUserDto> {
+    const user = await this.tokenService.getUserFromPayload(
+      headers['authorization'],
+    );
 
-    console.log(profile);
+    if (avatar) profile.avatar = avatar.path;
+
+    //console.log(user, profile, avatar.path);
+    return new ResponseUserDto(
+      await this.userService.updateUserProfile(user, profile),
+    );
   }
 }

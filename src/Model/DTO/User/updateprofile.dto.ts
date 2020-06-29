@@ -4,5 +4,5 @@ export class UpdateProfileDto {
   surName: string;
   oldPassword: string;
   newPassword: string;
-  avatar: File;
+  avatar: string;
 }

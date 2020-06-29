@@ -61,6 +61,8 @@ export class NewsController {
     @Param() params: any,
     @Body() news: NewsPostDto,
   ): Promise<NewsGetDto[]> {
+    console.log('!!! ');
+
     await this.newsService.updateNews(params.id, news);
     return this.newsService.allNews();
   }

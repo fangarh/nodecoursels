@@ -1,4 +1,4 @@
-import { IUser } from '../../User/User';
+import { User } from '../../User/User';
 
 export class NewsUserDto {
   firstName: string;
@@ -8,7 +8,7 @@ export class NewsUserDto {
   surName: string;
   username: string;
 
-  fromIUser(user: IUser): void {
+  fromIUser(user: User): void {
     this.id = user.id;
     this.firstName = user.firstName;
     this.image = user.avatar || '';
