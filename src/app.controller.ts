@@ -1,6 +1,6 @@
 import { Controller, Get, Redirect, Param } from '@nestjs/common';
 
-const uri = 'http://localhost:3030/';
+const uri = process.env.CLIENT;
 
 @Controller()
 export class AppController {
