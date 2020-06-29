@@ -19,7 +19,7 @@ import { ResponseUserDto } from '../Model/DTO/User/responseuser.dto';
 import { UpdateProfileDto } from '../Model/DTO/User/updateprofile.dto';
 import { UserRepository } from '../Repository/user.repository';
 import { UserAclDto } from '../Model/DTO/User/useracl.dto';
-
+const DOMAIN = 'http://localhost:3000';
 @Controller('api')
 export class UserController {
   constructor(
@@ -83,7 +83,7 @@ export class UserController {
       headers['authorization'],
     );
 
-    if (avatar) profile.avatar = avatar.path;
+    if (avatar) profile.avatar = DOMAIN + '/' + avatar.path;
 
     //console.log(user, profile, avatar.path);
     return new ResponseUserDto(
