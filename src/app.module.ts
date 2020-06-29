@@ -9,6 +9,7 @@ import { join } from 'path';
 import { UserModule } from './User/user.module';
 import { AppController } from './app.controller';
 import { NewsModule } from './News/news.module';
+import { ChatModule } from './Chat/chat.module';
 
 const env = process.env.CONFIG_PATH_FOR_LOFT || 'development';
 //// db: https://cloud.mongodb.com/v2/5eeb22efd415d861d2811527#clusters
@@ -28,8 +29,9 @@ const env = process.env.CONFIG_PATH_FOR_LOFT || 'development';
       dest: './upload',
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, 'upload'),
+      rootPath: join(__dirname, '..', 'upload'),
     }),
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [],
