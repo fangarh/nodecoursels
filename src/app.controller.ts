@@ -1,19 +1,26 @@
-import { Controller, Get, Redirect, Param, Res } from '@nestjs/common';
+import { Controller, Get, Redirect, Param } from '@nestjs/common';
 
 const uri = 'http://localhost:3030/';
 
 @Controller()
 export class AppController {
-  @Get(':data')
+  @Get(':param')
   @Redirect(uri)
-  redirectToClient(): void {
-    return;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  redirectToClient(@Param() param: any): any {
+    console.log(param);
+    return uri;
   }
 
-  @Get('upload/:data')
+  @Get('/')
+  @Redirect(uri)
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  uploadImg(@Param() p: any, @Res() res): any {
-    const img = p.data;
-    return res.sendFile(img, { root: './upload' });
+  redirectToClient1(@Param() param: any): any {
+    console.log(param);
+    return uri;
   }
 }
