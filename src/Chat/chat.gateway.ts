@@ -68,8 +68,6 @@ export class ChatGateway
       socketId: user.SocketId,
       userId: user.UserId,
     });
-    //client.emit('message:add', 'sd');
-    //this.server.broadcast.emit('message:add', 'qwewqeqwe');
   }
 
   afterInit(server: Server): void {
@@ -85,8 +83,6 @@ export class ChatGateway
   handleConnection(client: Socket, ...args: any[]): void {
     console.log(`Client connected: ${client.id}`);
     console.log(args);
-    //this.clients[client.id] = client;
-    //console.log(client);
   }
 
   addMessageToHistory(
