@@ -1,6 +1,6 @@
 import { Controller, Get, Redirect, Param } from '@nestjs/common';
 
-const uri = process.env.CLIENT;
+const uri = 'http://ya.ru'; //process.env.CLIENT;
 
 @Controller()
 export class AppController {
