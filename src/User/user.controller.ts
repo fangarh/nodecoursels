@@ -101,7 +101,11 @@ export class UserController {
     await this.resizFile(avatar);
 
     if (!host.includes('http://')) host = 'http://' + host;
-    if (avatar) profile.avatar = host + '/' + avatar.path;
+    if (avatar)
+      profile.avatar =
+        host + '/upload/' + this.sizes[1] + '/' + basename(avatar.path);
+
+    console.log(profile.avatar);
 
     //console.log(user, profile, avatar.path);
     return new ResponseUserDto(
@@ -118,7 +122,7 @@ export class UserController {
 
     if (!['.jpeg', '.jpg', '.bmp', '.png'].includes(ext)) return;
 
-    this.sizes.forEach((s: string) => {
+    this.sizes.forEach(async (s: string) => {
       const [size] = s.split('X');
 
       console.log('>>>SIZE>>', +size, size);
@@ -126,15 +130,11 @@ export class UserController {
       if (!fs.existsSync(join(dirToResized, s)))
         fs.mkdirSync(join(dirToResized, s));
 
-      AsyncReadFile(dirToImg)
-        .then((b: Buffer) => {
-          return sharp(b)
-            .resize(+size, +size)
-            .toFile(`${join(dirToResized, s, imgName)}`);
-        })
-        .then(() => {
-          console.log('Resize compleate');
-        });
+      await AsyncReadFile(dirToImg).then((b: Buffer) => {
+        return sharp(b)
+          .resize(+size, +size)
+          .toFile(`${join(dirToResized, s, imgName)}`);
+      });
     });
   }
 }
