@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { tokensSelector, refreshTokenRequest, logout } from '../store/auth';
 import { openNotification } from '../store/notifications';
-const baseURL = 'http://localhost:3000/api/';
+const baseURL = 'https://ddsloftcourse.herokuapp.com/api/';
 const instance = axios.create({ baseURL });
 
 const waitQueue = [];
@@ -15,32 +15,28 @@ const request = ({
   isRefresh,
   isWithoutToken,
   getState = () => ({}),
-  dispatch = () => { }
+  dispatch = () => {},
 }) =>
   //console.log(url, data);
   new Promise((resolve, reject) => {
-
     const {
       accessToken,
       accessTokenExpiredAt,
-      refreshTokenExpiredAt
+      refreshTokenExpiredAt,
     } = tokensSelector(getState());
 
     // request handler
     const requestFunc = ({ url, method, headers, data, resolve, reject }) => {
       if (!isWithoutToken) {
-        const {
-          accessToken,
-          refreshToken,
-        } = tokensSelector(getState());
-        (headers['Authorization'] = isRefresh ? refreshToken : accessToken);
+        const { accessToken, refreshToken } = tokensSelector(getState());
+        headers['Authorization'] = isRefresh ? refreshToken : accessToken;
       }
       console.log(url, data);
       return instance({ url, method, headers, data })
-        .then(response => {
+        .then((response) => {
           resolve(response.data);
         })
-        .catch(error => {
+        .catch((error) => {
           if (error.response) {
             const status = error.response.status || 404;
             const errorResponse = error.response.data;
@@ -52,7 +48,7 @@ const request = ({
             switch (status) {
               case 401:
               case 403:
-                dispatch(logout())
+                dispatch(logout());
                 return reject(errorResponse);
               case 500:
               case 502:
@@ -60,7 +56,7 @@ const request = ({
                 dispatch(
                   openNotification({
                     variant: 'error',
-                    text: `${status}!\nSomething is wrong))`
+                    text: `${status}!\nSomething is wrong))`,
                   })
                 );
                 return reject({ detail: 'Unknown error' });
@@ -71,7 +67,7 @@ const request = ({
             dispatch(
               openNotification({
                 variant: 'error',
-                text: `Error!!\n${error.message}`
+                text: `Error!!\n${error.message}`,
               })
             );
             return reject(error.message);
@@ -93,7 +89,7 @@ const request = ({
           headers,
           isRefresh,
           resolve,
-          reject
+          reject,
         });
 
       // dispatch refresh token (first-time only!)
@@ -103,11 +99,11 @@ const request = ({
           .then(() => {
             isRefreshDispatched = false;
             // and after refresh - execute requests from waiting stack
-            waitQueue.forEach(config => requestFunc(config));
+            waitQueue.forEach((config) => requestFunc(config));
           })
           .catch(() => {
             // by default in error - logout user
-            dispatch(logout())
+            dispatch(logout());
             // eslint-disable-next-line
             reject({ detail: 'Refresh token error' });
           });
@@ -117,7 +113,7 @@ const request = ({
       }
     } else if (isRefreshExpired && !isWithoutToken) {
       // if refresh is expired - just logout
-      dispatch(logout())
+      dispatch(logout());
       // eslint-disable-next-line
       reject({ detail: 'Refresh token is expired' });
     } else {
