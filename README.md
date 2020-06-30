@@ -1,75 +1,134 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+## LoftSchool
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Большая домашняя работа курса по Node.js - Корпоративная система _"LoftSystem"_.
 
-## Description
+### Задача
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+В папке ./build находится подготовленная frontend-часть проекта, ваша задача - реализовать backend.
 
-## Installation
+1.  Выберите фреймворк - [Express.js](http://expressjs.com/ru/) или [Koa.js](http://koajs.com/).
+2.  Выберите базу данных - MongoDB (рекомедуемая ORM - [Mongoose](http://mongoosejs.com/)) или PostgreSQL (рекомедуемая ORM - [Sequelize](http://docs.sequelizejs.com/)).
+3.  Подготовьте http-сервер, который на любой get-запрос вернет index.html (маршрутизация выполняется на frontend'e средствами бибилиотеки react-router).
+4.  Реализуйте логику обработки 12 различных запросов:
+    - POST-запрос на `/api/registration` - создание нового пользователя (регистрация). Сигнатура запроса: `{ username, surName, firstName, middleName, password }`. Необходимо вернуть объект авторизовавшегося пользователя.
+    - POST-запрос на `/api/login` - авторизация после пользователького ввода. Cигнатура запроса: `{ username, password }` Необходимо вернуть объект авторизовавшегося пользователя.
+    - POST-запрос на `/api/refresh-token` - обновление access-токена. В headers['authorization'] прикрепить refresh-токен. Вернуть обьект с токенами
+    - GET-запрос на `/api/profile` - авторизация при наличии токена. Необходимо вернуть объект пользователя.
+    - PATCH-запрос на `/api/profile` - обновление информации о пользователе.
+        Сигнатура запроса:
+        ```
+        {
+            firstName: String,
+            middleName: String,
+            surName: String,
+            oldPassword: String,
+            newPassword: String,
+            avatar: File
+        }
+        ```
+        Необходимо вернуть объект обновленного пользователя.
+    - DELETE-запрос на `/api/users/:id` - удаление пользователя.
+    - GET-запрос на `/api/news` - получение списка новостей. Необходимо вернуть список всех новостей из базы данных.
+    - POST-запрос на `/api/news` - создание новой новости. Сигнатура запроса: `{ text, title }`. Необходимо вернуть обновленный список всех новостей из базы данных.
+    - PATCH-запрос на `/api/news/:id` - обновление существующей новости. Сигнатура запроса: `{ text, title }`. Необходимо вернуть обновленный список всех новостей из базы данных.
+    - DELETE-запрос на `/api/news/:id` - удаление существующей новости. Необходимо вернуть обновленный список всех новостей из базы данных.
+    - Автоматический GET-запрос на `/api/users` - получение списка пользователей. Необходимо вернуть список всех пользоватлей из базы данных.
+    - PATCH-запрос на `/api/users/:id/permission` - обновление существующей записи о разрешениях конкретного пользователя. Сигнатура:
+    ```
+    {
+        permission: {
+            chat: { C: Boolean, R: Boolean, U: Boolean, D: Boolean },
+            news: { C: Boolean, R: Boolean, U: Boolean, D: Boolean },
+            settings: { C: Boolean, R: Boolean, U: Boolean, D: Boolean }
+        }
+    }
+    ```
+> Обьект пользователя:
+```
+{
+    firstName: String,
+    id: Primary key,
+    image: String,
+    middleName: String,
+    permission: {
+        chat: { C: Boolean, R: Boolean, U: Boolean, D: Boolean },
+        news: { C: Boolean, R: Boolean, U: Boolean, D: Boolean },
+        settings: { C: Boolean, R: Boolean, U: Boolean, D: Boolean }
+    }
+    surName: String,
+    username: String
+}
+```
+> Обьект авторизованного пользователя:
+```
+{
+    firstName: String,
+    id: Primary key,
+    image: String,
+    middleName: String,
+    permission: {
+        chat: { C: Boolean, R: Boolean, U: Boolean, D: Boolean },
+        news: { C: Boolean, R: Boolean, U: Boolean, D: Boolean },
+        settings: { C: Boolean, R: Boolean, U: Boolean, D: Boolean }
+    }
+    surName: String,
+    username: String,
 
-```bash
-$ npm install
+    accessToken: String,
+        refreshToken: String,
+        accessTokenExpiredAt: Date (ms),
+        refreshTokenExpiredAt: Date (ms)
+}
+```
+> Обьект новости:
+```
+{
+    id: Primary key,
+    created_at: Date,
+    text: String,
+    title: String,
+    user: {
+        firstName: String,
+        id: Key,
+        image: String,
+        middleName: String,
+        surName: String,
+        username: String
+    }
+}
+```
+> Обьект с токенами:
+```
+{
+    accessToken: String,
+    refreshToken: String,
+    accessTokenExpiredAt: Date (ms),
+    refreshTokenExpiredAt: Date (ms)
+}
+```
+> (Более подробную информацию о url, дополнительных параметрах и передаваемых данных запроса вы можете получить через средства разработчика при взаимодействии с интерфейсом).
+
+5.  Реализуйте логику взаимодействия frontend и backend частей между собой с помощью socket. Необходимо для реализации чата. У вас далжен быть хеш-объект, в который вы запишите все активные подключения в формате:
+
+```
+{ #socketId: {
+  username: #username,
+  socketId: #socketId,
+  userId: #userId,
+  activeRoom: null // По умолчанию
+  },
+  ...
+}
 ```
 
-## Running the app
+Ваше socket-подключение должно обрабатывать следующие события:
 
-```bash
-# development
-$ npm run start
+- `users:connect`, инициируется при подключении пользователя. Необходимо создать объект пользователя и сохранить в нем socketId сокета, userId пользователя и имя пользователя, как свойства, обновить общий объект, и отправить его, в виде массива, только что подключившемуся пользователю (с помощью события `users:list`) и разослать всем подключенным сокетам объект нового пользователя (с помощью события `users:add`).
+- `message:add`, инициируется при отправке одним из пользователей сообщения другому. Нужно передать пользователю-получателю в параметрах текст сообщения (text) и senderId отправителя и recipientId получателя с помощью события `message:add`.
+- `message:history`, инициируется при открытии пользователем чата. Нужно вернуть пользователю список сообщений диалога с выбранным пользователем. Параметры: recipientId - id пользователя-получателя (чат с которым мы открыли), userId - id пользователя (свой). Список сообщений диалога отправить с помощью события `message:history`.
+- `disconnect`, инициируется при отключении пользователя. Нужно передать всем подключенным пользователям socketId отключившегося пользователя (с помощью события `users:leave`), и удалить пользователя из объекта всех подключенных пользователей.
 
-# watch mode
-$ npm run start:dev
+6.  Подготовьте окружение и запустите проект на выбранном вами хостинге (например, [heroku](https://www.heroku.com/)).
 
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-  Nest is [MIT licensed](LICENSE).
+**Дополнительное задание 1**: обеспечьте при необходимости сжатие картинок, загружаемых пользователями, и их обрезку до квадратных пропорций (для этого можно использовать [jimp](https://github.com/oliver-moran/jimp)).
+**Дополнительное задание 2**: обеспечьте возможность работы приложения в 2 режимах - `development` и `producton`. В `development` режиме приложение должно быть подключено к локальной базе данных, в то время как в `producton` режиме - к удаленной, которая и будет использоваться при работе на хостинге.
