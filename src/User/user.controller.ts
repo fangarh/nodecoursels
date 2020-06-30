@@ -129,7 +129,7 @@ export class UserController {
       AsyncReadFile(dirToImg)
         .then((b: Buffer) => {
           return sharp(b)
-            .resize(+size)
+            .resize(+size, +size)
             .toFile(`${join(dirToResized, s, imgName)}`);
         })
         .then(() => {
