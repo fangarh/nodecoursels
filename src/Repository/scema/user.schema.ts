@@ -9,6 +9,7 @@ export const UserSchema = new mongo.Schema({
   surName: { type: String, required: false },
   password: { type: String, required: true },
   salt: { type: String, required: true },
+  refreshToken: { type: String, required: false },
 
   token: {
     accessToken: { type: String },

@@ -11,7 +11,7 @@ export class Permissions {
   settings: ACL;
 }
 
-export interface IToken {
+export class Token {
   AccessToken: string;
   RefreshToken: string;
   AccessTokenExpiredAt: Date;

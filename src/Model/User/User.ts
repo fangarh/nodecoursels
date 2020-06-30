@@ -1,4 +1,4 @@
-import { Permissions, IToken } from './ACL';
+import { Permissions, Token } from './ACL';
 import { Document } from 'mongoose';
 
 export class User extends Document {
@@ -8,8 +8,9 @@ export class User extends Document {
   middleName: string;
   username: string;
   permissions: Permissions;
-  token: IToken;
+  token: Token;
   password: string;
   salt: string;
   avatar: string;
+  refreshToken: string;
 }

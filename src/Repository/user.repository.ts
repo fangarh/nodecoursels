@@ -8,7 +8,7 @@ import { User } from '../Model/User/User';
 import { CreateUserDto } from '../Model/DTO/User/createuser.dto';
 import { UpdateProfileDto } from '../Model/DTO/User/updateprofile.dto';
 import { ResponseUserDto } from '../Model/DTO/User/responseuser.dto';
-import { Permissions } from '../Model/User/ACL';
+import { Permissions, Token } from '../Model/User/ACL';
 
 @Injectable()
 export class UserRepository {
@@ -39,6 +39,15 @@ export class UserRepository {
   async deleteUser(id: string): Promise<void> {
     const user = await this.userModel.findOne({ id: id }).exec();
     user.remove();
+  }
+
+  async updateUserRefreshToken(userName: string, token: string): Promise<void> {
+    const user: User = await this.find(userName);
+
+    user.refreshToken = token;
+
+    console.log('UPDTOKEN>>>>', user.refreshToken);
+    await user.save();
   }
 
   async updateUserAcl(id: string, acl: Permissions): Promise<ResponseUserDto> {

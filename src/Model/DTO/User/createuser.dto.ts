@@ -1,4 +1,4 @@
-import { Permissions, IToken } from '../../User/ACL';
+import { Permissions, Token } from '../../User/ACL';
 
 export class CreateUserDto {
   id: string;
@@ -8,5 +8,5 @@ export class CreateUserDto {
   username: string;
   password: string;
   permissions: Permissions;
-  token: IToken;
+  token: Token;
 }
