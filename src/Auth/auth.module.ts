@@ -20,7 +20,7 @@ const env = process.env.CONFIG_PATH_FOR_LOFT || 'development';
     JwtModule.register({
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: '1d',
+        expiresIn: '8d',
       },
     }),
     RepositoryModule,

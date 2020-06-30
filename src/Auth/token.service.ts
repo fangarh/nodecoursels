@@ -6,6 +6,7 @@ import { ResponseUserDto } from '../Model/DTO/User/responseuser.dto';
 import { UserRepository } from '../Repository/user.repository';
 import { IRefreshPayloadDto } from '../Model/DTO/Auth/refreshtokenpayload.dto';
 import { RefreshTokenDto } from '../Model/DTO/Auth/refreshtoken.dto';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class TokenService {
@@ -26,7 +27,9 @@ export class TokenService {
 
     userObj.accessToken = accessToken;
     userObj.accessTokenExpiredAt = new Date(Date.now() + 1 * this.tickInDay);
-    userObj.refreshToken = await this.jwtService.sign(refreshPayload);
+    userObj.refreshToken = await jwt.sign(refreshPayload, 'qwe123!+', {
+      expiresIn: '8d',
+    });
     userObj.refreshTokenExpiredAt = new Date(Date.now() + 8 * this.tickInDay);
     this.userService.updateUserRefreshToken(
       userObj.username,
@@ -78,7 +81,9 @@ export class TokenService {
     const newTokenData: RefreshTokenDto = {
       accessToken: accessToken,
       accessTokenExpiredAt: new Date(Date.now() + 1 * this.tickInDay),
-      refreshToken: await this.jwtService.sign(refreshPayload),
+      refreshToken: await jwt.sign(refreshPayload, 'qwe123!+', {
+        expiresIn: '8d',
+      }),
       refreshTokenExpiredAt: new Date(Date.now() + 8 * this.tickInDay),
     };
 
