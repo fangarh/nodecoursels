@@ -86,7 +86,11 @@ export class UserController {
       headers['authorization'],
     );
 
-    if (avatar) profile.avatar = this.DOMAIN + '/' + avatar.path;
+    console.log('FROM HEADER: >>> ', headers.host);
+    let host = headers.host;
+
+    if (!host.includes('http://')) host = 'http://' + host;
+    if (avatar) profile.avatar = host + '/' + avatar.path;
 
     //console.log(user, profile, avatar.path);
     return new ResponseUserDto(

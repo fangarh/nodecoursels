@@ -39,6 +39,7 @@ export class AuthController {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async refreshToken(@Headers() headers: any): Promise<RefreshTokenDto> {
     const rToken = headers['authorization'];
+    console.log(headers.host);
     const authToken = await this.tokenService.getRefreshPayload(rToken);
 
     console.log(authToken);
