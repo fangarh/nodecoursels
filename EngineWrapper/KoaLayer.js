@@ -13,7 +13,7 @@ module.exports = KoaLayer = () => {
   let pug = {};
 
   return {
-    name: "koa",
+    name: "koa", 
     initSession: (defaults) => {
       app.use(session(Constants.koaSessionConfig, app));
       app.use(async (ctx, next) => {

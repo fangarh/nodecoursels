@@ -25,7 +25,7 @@ module.exports = ExpressLayer = () => {
       bb.extend(app, { upload: true, path: "./public/img", allowedPath: /./ });
       app.use(bodyParser.json());
       app.use(bodyParser.urlencoded({ extended: false }));
-      
+
       app.set("views", viewPath);
       app.set("view engine", "pug");
     },
@@ -52,7 +52,6 @@ module.exports = ExpressLayer = () => {
         },
         function (req, res, next) {
           controller(req, res, req.session);
-
           if (redirectUri === Constants.noRedirectTemplate)
             res.redirect(req.route.path);
           else res.redirect(redirectUri);

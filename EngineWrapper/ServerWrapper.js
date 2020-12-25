@@ -30,6 +30,7 @@ module.exports = ServerWrapper = (engine) => {
     initSession: (defaults) => {
       _engine.initSession(defaults);
     },
+
     initView: () => {
       buildCheck();
       _engine.initView(
